@@ -3,7 +3,7 @@ name: Run Telegraf in GitHub Actions
 on: 
   push:
     branches:
-      - main  # Runs when you push to the main branch
+      - main  # Runs when you push to main branch
 
 jobs:
   run-telegraf:
@@ -20,15 +20,16 @@ jobs:
       - name: Configure Telegraf
         run: |
           echo '[[inputs.mqtt_consumer]]' > telegraf.conf
-          echo 'servers = ["ssl://broker.emqx.io:8883"]' >> telegraf.conf
-          echo 'topics = ["farm/sensor"]' >> telegraf.conf
+          echo 'servers = ["ssl://ca6f126b.ala.asia-southeast1.emqxsl.com:8883"]' >> telegraf.conf
+          echo 'topics = ["farmflow/test"]' >> telegraf.conf
+          echo 'username = "admin"' >> telegraf.conf
+          echo 'password = "admin11223"' >> telegraf.conf
           echo 'data_format = "json"' >> telegraf.conf
           echo '[[outputs.influxdb_v2]]' >> telegraf.conf
-          echo 'urls = ["https://us-west-2-1.aws.cloud2.influxdata.com"]' >> telegraf.conf
+          echo 'urls = ["https://us-east-1-1.aws.cloud2.influxdata.com"]' >> telegraf.conf
           echo 'token = "${{ secrets.INFLUXDB_TOKEN }}"' >> telegraf.conf
-          echo 'organization = "YOUR_ORG_NAME"' >> telegraf.conf
-          echo 'bucket = "farmflow"' >> telegraf.conf
+          echo 'organization = "FarmFlow"' >> telegraf.conf
+          echo 'bucket = "FarmFlow"' >> telegraf.conf
 
       - name: Run Telegraf
         run: telegraf --config telegraf.conf
-
